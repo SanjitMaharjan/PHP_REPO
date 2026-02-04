@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        height: 100vh;
+        background-color: rgb(244, 228, 206);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background: #a2aba5;
+        background: linear-gradient(90deg, rgba(162, 171, 165, 1) 51%, rgba(69, 67, 67, 1) 100%);
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: auto;
+        padding-bottom: 10px;
+        font-size: 20px;
+        color: white;
+        max-width: 300px;
+        /* border: 1px solid; */
+        padding: 40px 30px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 20px;
+        background-color: rgb(43, 43, 43);
+    }
+
+    .form-container button {
+        margin-top: 5px;
+        font-size: 20px;
+        cursor: pointer;
+        width: fit-content;
+        padding: 10px 20px;
+        border-radius: 20px;
+        align-self: center;
+        background: #ffffff;
+        background: linear-gradient(5deg, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        border: none;
+    }
+
+    .form-container input {
+        font-size: 20px;
+        border: 2px solid rgb(161, 143, 143);
+        border-radius: 10px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <form action="" method="post" class="form-container">
+            Name: <input type="text" name="name">
+            Email: <input type="email" name="email">
+            Username : <input type="text" name="username">
+            Password : <input type="text" name="password">
+            <button type="submit">SignUp</button>
+        </form>
+        <a href="login.php">Login</a>
+    </div>
+</body>
+
+</html>
