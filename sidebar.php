@@ -1,3 +1,24 @@
+<?php
+include "dbconnection.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $min = $_POST['minimum'] ?? 0;
+    $max = $_POST['maximum'] ?? 50000;
+    echo "Hello";
+    echo "PHP received: min = $min, max = $max";
+    $stmt = $conn->prepare("SELECT * from products WHERE price BETWEEN ? AND ?");
+    $stmt->bind_param("ii", $min, $max);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+
+    echo json_encode($products);
+    exit; // IMPORTANT for fetch responses
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,14 +113,6 @@
 
 <body>
     <div class="sidebar">
-        <?php
-        include "dbconnection.php";
-        // $maximum = $_POST['maximum'];
-        echo "Hello World";
-        // $price = $minimum;
-        // echo "$price"
-        // $stmt = $conn->prepare("SELECT * from products WHERE price BETWEEN ? AND ?")
-        ?>
         <div class="top-bar">
 
             <h3>Categories</h3>
@@ -142,6 +155,18 @@
         console.log("Maximun : " + maxValue.value + " and " + maxrange.value);
         let minimum = minValue.value;
         let maximum = maxValue.value;
+        fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'minimum=' + encodeURIComponent(minimum) +
+                    '&maximum=' + encodeURIComponent(maximum)
+            })
+            .then(res => res.text())
+            .then(data => {
+                console.log(data); // Logs: PHP received: min = 10, max = 100
+            });
     })
     maxrange.addEventListener("input", () => {
         maxValue.value = maxrange.value;
