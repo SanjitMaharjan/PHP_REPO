@@ -1,6 +1,16 @@
 <?php
 include "dbconnection.php";
 
+$loggedUSer = $_SESSION["username"];
+
+// $isAdmin = 1;
+
+$adminCheck = $conn->prepare("SELECT is_admin from user where username = ?");
+$adminCheck->bind_param("s", $loggedUSer);
+$adminCheck->execute();
+$data = $adminCheck->get_result();
+$row = $data->fetch_assoc();
+$isAdmin = $row['is_admin'];
 $allCC = $conn->prepare("SELECT DISTINCT cc FROM products;");
 $allCC->execute();
 $uniqueValues = $allCC->get_result();
@@ -82,6 +92,7 @@ if (isset($_GET["submit"])) {
         font-size: 20px;
         width: 100%;
         border: none;
+        /* background: white; */
     }
 
     .search .searchbar form input:focus {
@@ -119,6 +130,7 @@ if (isset($_GET["submit"])) {
         /* background-color: wheat; */
         box-shadow: rgba(188, 4, 4, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     }
+
 </style>
 
 <body>
@@ -137,11 +149,13 @@ if (isset($_GET["submit"])) {
         </div>
         <div class="navigation">
             <ul>
-                <li>Home</li>
+                <li><a href="dashboard.php">Home</a></li>
                 <li>About Us</li>
                 <li>Products</li>
                 <li>Contact Us</li>
-
+                <li><a href="addProduct.php"><?php if($isAdmin == 1){
+                    echo "Admin";
+                } ?></a></li>
             </ul>
         </div>
     </nav>

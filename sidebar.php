@@ -4,18 +4,23 @@ include "dbconnection.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $min = $_POST['minimum'] ?? 0;
     $max = $_POST['maximum'] ?? 50000;
-    echo "Hello";
-    echo "PHP received: min = $min, max = $max";
+    // echo "Hello";
+    // echo "PHP received: min = $min, max = $max";
     $stmt = $conn->prepare("SELECT * from products WHERE price BETWEEN ? AND ?");
     $stmt->bind_param("ii", $min, $max);
     $stmt->execute();
     $result = $stmt->get_result();
-    $products = [];
+    // $products = [];
+    // while ($row = $result->fetch_assoc()) {
+    //     $products[] = $row;
+    // }
+
+    // echo json_encode($products);
     while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
+        // include "productsCard.php";
+        include "test.php";
     }
 
-    echo json_encode($products);
     exit; // IMPORTANT for fetch responses
 }
 ?>
@@ -99,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     input[type="range"]::-webkit-slider-thumb {
         /* transform: scale(1.15); */
         -webkit-appearance: none;
-        color: red;
+        /* color: red; */
         width: 10px;
         height: 15px;
         background-color: #704d4d;
@@ -134,7 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Max
             <input type="range" name="" id="maxprice-dragger" min="0" max="50000" value="50000" step="10">
         </div>
-
+        <div class="logout" style="margin-top: 50px;">
+            <a href="logout.php"><?php echo "Logut" ?></a>
+        </div>
     </div>
 
 </body>
@@ -166,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .then(res => res.text())
             .then(data => {
                 console.log(data); // Logs: PHP received: min = 10, max = 100
+                document.querySelector(".container").innerHTML = data;
             });
     })
     maxrange.addEventListener("input", () => {
@@ -188,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .then(res => res.text())
             .then(data => {
                 console.log(data); // Logs: PHP received: min = 10, max = 100
+                document.querySelector(".container").innerHTML = data;
             });
     })
 </script>

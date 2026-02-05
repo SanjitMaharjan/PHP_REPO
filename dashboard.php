@@ -71,8 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 
 <body>
-    <?php include "navBar.php" ?>
     <?php include "sideBar.php" ?>
+    <?php include "navBar.php" ?>
     <div class="main-container">
         <!-- <h1>Welcome to the dashboard <?php echo $_SESSION['username'] ?></h1>
         <a href="logout.php">Logout</a>
